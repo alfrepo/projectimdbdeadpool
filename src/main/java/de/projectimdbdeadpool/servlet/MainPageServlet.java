@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import de.projectimdbdeadpool.model.FilmData;
-import de.projectimdbdeadpool.tools.UtilStoreFilmData;
+import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmData;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -49,7 +49,7 @@ public class MainPageServlet extends HttpServlet {
 
 		
 		// retrieve all FilmData
-		UtilStoreFilmData utils = new UtilStoreFilmData(this);
+		UtilStoreGcloudFilmData utils = new UtilStoreGcloudFilmData(this);
 		List<FilmData> data = utils.loadFilmData();
 		
 		Map<String, String> urls = new HashMap<>();

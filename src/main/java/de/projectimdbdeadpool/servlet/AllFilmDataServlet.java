@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import de.projectimdbdeadpool.model.FilmData;
-import de.projectimdbdeadpool.tools.UtilStoreFilmData;
+import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmData;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -47,7 +47,7 @@ public class AllFilmDataServlet extends HttpServlet {
 		log.warning("AllFilmDataServlet.get()");
 		
 		PrintWriter out = resp.getWriter();
-		UtilStoreFilmData utilStore = new UtilStoreFilmData(this);
+		UtilStoreGcloudFilmData utilStore = new UtilStoreGcloudFilmData(this);
 
 		// allow to request this data from other servers
 		addCorsHeader(resp);

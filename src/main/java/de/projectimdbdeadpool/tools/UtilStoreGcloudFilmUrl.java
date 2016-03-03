@@ -17,15 +17,14 @@ import com.google.gcloud.datastore.StringValue;
 import com.google.gcloud.datastore.StructuredQuery.OrderBy;
 
 import de.projectimdbdeadpool.model.FilmUrl;
-import de.projectimdbdeadpool.servlet.AllFilmDataServlet;
 
-public class UtilStoreFilmUrl extends UtilStore {
+public class UtilStoreGcloudFilmUrl extends UtilStoreGcloud {
 	
-	private static final Logger log = Logger.getLogger(UtilStoreFilmUrl.class.getName());
+	private static final Logger log = Logger.getLogger(UtilStoreGcloudFilmUrl.class.getName());
 	
 	protected static final String FILM_URL_KEY = "FilmUrl";
 
-	public UtilStoreFilmUrl(GenericServlet servlet) {
+	public UtilStoreGcloudFilmUrl(GenericServlet servlet) {
 		super(servlet);
 	}
 
@@ -100,7 +99,7 @@ public class UtilStoreFilmUrl extends UtilStore {
 	}
 
 	public void clearAllFilmUrlFromDatastore() {
-		clearAllEntities(FILM_URL_KEY);
+		clearAllEntities(servlet, FILM_URL_KEY);
 	}
 
 }

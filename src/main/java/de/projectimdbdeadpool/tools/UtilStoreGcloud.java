@@ -17,14 +17,14 @@ import com.google.gcloud.datastore.Entity;
 import com.google.gcloud.datastore.Key;
 import com.google.gcloud.datastore.Query;
 
-public class UtilStore {
+public class UtilStoreGcloud {
 
 	public static final String PROJECT_ID = "projectimdbdeadpool";
 	public static final String PATH_TO_JSON_KEY = "/WEB-INF/keys/projectimdbdeadpool-30d8a0485934.json";
 
 	protected GenericServlet servlet;
 
-	public UtilStore(GenericServlet servlet) {
+	public UtilStoreGcloud(GenericServlet servlet) {
 		this.servlet = servlet;
 	}
 
@@ -41,7 +41,7 @@ public class UtilStore {
 		}
 	}
 	
-	protected void clearAllEntities(String kind) {
+	protected static void clearAllEntities(GenericServlet servlet, String kind) {
 		
 		Datastore datastore = initDataStore(servlet);
 		Query<Entity> query = Query.entityQueryBuilder().kind(kind).build();

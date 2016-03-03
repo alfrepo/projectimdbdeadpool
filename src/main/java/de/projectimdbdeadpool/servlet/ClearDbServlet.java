@@ -25,7 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import de.projectimdbdeadpool.tools.UtilStoreFilmData;
+import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmData;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -62,7 +62,7 @@ public class ClearDbServlet extends HttpServlet {
 		log.warning(MESSAGE_CLEARING_ALL_FILM_DATA);
 		out.println(MESSAGE_CLEARING_ALL_FILM_DATA);
 
-		new UtilStoreFilmData(this).clearAllFilmDataFromDatastore();
+		new UtilStoreGcloudFilmData(this).clearAllFilmDataFromDatastore();
 //		new UtilStoreFilmUrl(this).clearAllFilmUrlFromDatastore();
 		
 		log.warning(MESSAGE_CLEARING_DONE);

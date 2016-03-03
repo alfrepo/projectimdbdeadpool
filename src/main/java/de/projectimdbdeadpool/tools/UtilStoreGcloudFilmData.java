@@ -4,25 +4,35 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.GenericServlet;
+
+import org.apache.commons.logging.Log;
 
 import com.google.gcloud.datastore.Datastore;
 import com.google.gcloud.datastore.DoubleValue;
 import com.google.gcloud.datastore.Entity;
+import com.google.gcloud.datastore.EntityQuery.Builder;
 import com.google.gcloud.datastore.Key;
 import com.google.gcloud.datastore.KeyFactory;
 import com.google.gcloud.datastore.Query;
 import com.google.gcloud.datastore.StringValue;
+import com.google.gcloud.datastore.StructuredQuery.Filter;
 import com.google.gcloud.datastore.StructuredQuery.OrderBy;
+import com.google.gcloud.datastore.StructuredQuery.PropertyFilter;
 
 import de.projectimdbdeadpool.model.FilmData;
+import de.projectimdbdeadpool.servlet.AllFilmDataServlet;
 
-public class UtilStoreFilmData extends UtilStore {
+public class UtilStoreGcloudFilmData extends UtilStoreGcloud {
 	
 	protected static final String FILM_DATA_KEY = "FilmData";
+	
+	private static final Logger log = Logger.getLogger(UtilStoreGcloudFilmData.class.getName());
 
-	public UtilStoreFilmData(GenericServlet servlet) {
+	public UtilStoreGcloudFilmData(GenericServlet servlet) {
 		super(servlet);
 	}
 
@@ -59,14 +69,20 @@ public class UtilStoreFilmData extends UtilStore {
 	public List<FilmData> loadFilmData(String imdbId) {
 			Datastore datastore = initDataStore(servlet);
 			
-	//		Filter imdbUrlFilter =	PropertyFilter.eq("imdbUrl", "http://www.imdb.com/title/tt1431045/");
-	//		Filter imdbUrlFilter =	PropertyFilter.eq("rating", 8.5);
+			Builder queryBuilder = Query.entityQueryBuilder()
+			.kind(FILM_DATA_KEY);
+
+			// filter if imdbId is given
+			if(imdbId!=null && !imdbId.isEmpty()){
+				String imdbUrl = String.format("http://www.imdb.com/title/%s/", imdbId.replace("/", ""));
+				Filter imdbUrlFilter =	PropertyFilter.eq("imdbUrl", imdbUrl);
+				queryBuilder.filter(imdbUrlFilter);
+			}
 			
-			Query<Entity> query = Query.entityQueryBuilder()
-					.kind(FILM_DATA_KEY)
-	//				.filter(imdbUrlFilter)
-					.orderBy(OrderBy.asc("created"))
-					.build();
+			// sort
+			queryBuilder.orderBy(OrderBy.asc("created"));
+			
+			Query<Entity> query = queryBuilder.build();
 			Iterator<Entity> iterator = datastore.run(query);
 	
 			List<FilmData> list = new ArrayList<>();
@@ -84,22 +100,11 @@ public class UtilStoreFilmData extends UtilStore {
 				list.add(data);
 			}
 			
-			// filter
-			if(imdbId!=null && !imdbId.isEmpty()){
-				Iterator<FilmData> iter =  list.iterator();
-				while (iter.hasNext()) {
-					if(!iter.next().imdbUrl.endsWith(imdbId+"/")){
-						iter.remove();
-					}
-				}
-			}
-			
-			
 			return list;
 		}
 
 	public void clearAllFilmDataFromDatastore() {
-		clearAllEntities(FILM_DATA_KEY);
+		clearAllEntities(servlet, FILM_DATA_KEY);
 	}
 
 }

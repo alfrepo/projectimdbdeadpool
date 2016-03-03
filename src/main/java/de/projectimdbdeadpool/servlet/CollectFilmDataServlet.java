@@ -28,8 +28,8 @@ import javax.servlet.http.HttpServletResponse;
 import de.projectimdbdeadpool.model.FilmData;
 import de.projectimdbdeadpool.model.FilmUrl;
 import de.projectimdbdeadpool.tools.UtilParse;
-import de.projectimdbdeadpool.tools.UtilStoreFilmData;
-import de.projectimdbdeadpool.tools.UtilStoreFilmUrl;
+import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmData;
+import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmUrl;
 
 // [START example]
 @SuppressWarnings("serial")
@@ -39,7 +39,7 @@ public class CollectFilmDataServlet extends HttpServlet {
 @Override
   public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     PrintWriter out = resp.getWriter();
-    UtilStoreFilmData utilStore = new UtilStoreFilmData(this);
+    UtilStoreGcloudFilmData utilStore = new UtilStoreGcloudFilmData(this);
     
     List<FilmData> listParsedFilmData = new ArrayList<>();
 
@@ -49,7 +49,7 @@ public class CollectFilmDataServlet extends HttpServlet {
 //    blockbusters.put("Batman v Superman", "http://www.imdb.com/title/tt2975590/");
 //    blockbusters.put("The Hateful Eight", "http://www.imdb.com/title/tt3460252/");
     
-    List<FilmUrl> observedUrls = new UtilStoreFilmUrl(this).loadFilmUrl();
+    List<FilmUrl> observedUrls = new UtilStoreGcloudFilmUrl(this).loadFilmUrl();
     
     // parse
     out.print("<table>");

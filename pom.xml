@@ -20,7 +20,7 @@ Copyright 2015 Google Inc. All Rights Reserved.
   <packaging>war</packaging>
   <version>1.0-SNAPSHOT</version>
   <groupId>com.example.appengine</groupId>
-  <artifactId>appengine-helloworld</artifactId>
+  <artifactId>projectimdbdeadpool</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -29,11 +29,18 @@ Copyright 2015 Google Inc. All Rights Reserved.
 			<type>jar</type>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Datastore gcloud API: http://googlecloudplatform.github.io/gcloud-java/0.1.4/index.html -->
 		<dependency>
 			<groupId>com.google.gcloud</groupId>
 			<artifactId>gcloud-java-datastore</artifactId>
 			<version>0.1.4</version>
 		</dependency>
+		<!-- Datastore appengine API: https://cloud.google.com/datastore/docs/concepts/overview -->
+		<dependency>
+            <groupId>com.google.appengine</groupId>
+            <artifactId>appengine-api-1.0-sdk</artifactId>
+            <version>1.9.32</version>
+        </dependency>
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>

@@ -16,7 +16,7 @@ import com.google.gcloud.datastore.Key;
 import de.projectimdbdeadpool.model.FilmData;
 import de.projectimdbdeadpool.model.FilmUrl;
 import de.projectimdbdeadpool.tools.UtilParse;
-import de.projectimdbdeadpool.tools.UtilStoreFilmUrl;
+import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmUrl;
 
 /**
  * Servlet implementation class ObserverdMoviesServlet
@@ -40,7 +40,7 @@ public class ObserverdMoviesServlet extends HttpServlet {
 	private void handleRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		PrintWriter out = resp.getWriter();
 		
-		UtilStoreFilmUrl utilStore = new UtilStoreFilmUrl(this);
+		UtilStoreGcloudFilmUrl utilStore = new UtilStoreGcloudFilmUrl(this);
 		
 		out.println("<head></head><body>");
 		out.println(
@@ -86,7 +86,7 @@ public class ObserverdMoviesServlet extends HttpServlet {
 	}
 
 	private void delUrl(PrintWriter out, String imdburlkeyForDeletion) {
-		new UtilStoreFilmUrl(this).deleteFilmUrl(imdburlkeyForDeletion);
+		new UtilStoreGcloudFilmUrl(this).deleteFilmUrl(imdburlkeyForDeletion);
 	}
 
 	private void addNewUrl(PrintWriter out, String imdburlPar) {
@@ -112,7 +112,7 @@ public class ObserverdMoviesServlet extends HttpServlet {
 		url.imdbUrl = filmData.imdbUrl;
 		url.name = filmData.name;
 
-		UtilStoreFilmUrl utilStoreFilmUrl = new UtilStoreFilmUrl(this);
+		UtilStoreGcloudFilmUrl utilStoreFilmUrl = new UtilStoreGcloudFilmUrl(this);
 		try {
 			Key key = utilStoreFilmUrl.storeFilmUrl(url);
 			url.entityKey = key;

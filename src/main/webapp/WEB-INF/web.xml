@@ -27,6 +27,22 @@
     <servlet-name>parse</servlet-name>
     <servlet-class>de.projectimdbdeadpool.servlet.ParseServlet</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>appengine</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.AppengineApiStorageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>query</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.QueryDbExamplesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>query</servlet-name>
+    <url-pattern>/rest/query/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>appengine</servlet-name>
+    <url-pattern>/rest/appengine/*</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>main</servlet-name>
     <url-pattern>/rest/</url-pattern>

@@ -1,0 +1,8 @@
+indexes:
+
+- kind: FilmData
+  ancestor: no
+  properties:
+  - name: imdbUrl
+  - name: created
+    direction: asc
