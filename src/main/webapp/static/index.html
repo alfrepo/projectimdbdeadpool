@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+
+      // Load the Visualization API and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Set a callback to run when the Google Visualization API is loaded.
+      google.charts.setOnLoadCallback(googleLoad);
+
+	  function getImdbid(){
+			var $_GET = {};
+
+			document.location.search.replace(/\??(?:([^=]+)=([^&]*)&?)/g, function () {
+				function decode(s) {
+					return decodeURIComponent(s.split("+").join(" "));
+				}
+
+				$_GET[decode(arguments[1])] = decode(arguments[2]);
+			});
+
+			return $_GET["imdbid"];
+	  }
+	  
+	  function googleLoad() {
+	  		  
+		  var imdbid = getImdbid();
+		  console.log(imdbid);
+		  
+		  var flickerAPI = "http://projectimdbdeadpool.appspot.com/rest/show?imdbId="+imdbid;
+		  console.log(flickerAPI);
+		  
+		  $.getJSON( flickerAPI, {
+			tags: "mount rainier",
+			tagmode: "any",
+			format: "json"
+		  })
+			.done(function( jsondata ) {
+			
+				var ratingdata = [['Date', 'The IMDB rating'],];			
+				$.each(jsondata.filmdata, function() {
+				  //console.log(this);
+				  ratingdata.push([this.created, parseFloat(this.imdbRating)]);
+				});
+				console.log(ratingdata);
+				var googleRatingData = google.visualization.arrayToDataTable(ratingdata);
+								
+				var ratingCntData = [['Date', 'How many users rated the movie'],];			
+				$.each(jsondata.filmdata, function() {
+				  //console.log(this);
+				  ratingCntData.push([this.created, parseFloat(this.imdbRatingCnt)]);
+				});
+				console.log(ratingCntData);
+				var googleRatingCntData = google.visualization.arrayToDataTable(ratingCntData);
+				
+				$("#url_div").text(jsondata.imdburl);
+				$("#title_div").text(jsondata.filmdata[0].name);				
+				
+				drawChart(googleRatingData, googleRatingCntData);
+			});
+	  }
+	  
+      // Callback that creates and populates a data table,
+      // instantiates the pie chart, passes in the data and
+      // draws it.
+      function drawChart(googleRatingData, googleRatingCntData) {
+		  
+
+        var options1 = {
+          title: 'Imdb Rating Cnt',
+          curveType: 'function',
+          legend: { position: 'bottom'}, 
+		  logScale: true
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart_ratingcnt'));
+        chart.draw(googleRatingCntData, options1);
+		
+        var options2 = {
+          title: 'Imdb Rating',
+          curveType: 'function',
+          legend: { position: 'bottom'}, 
+		  logScale: false
+        };
+		
+		var chart2 = new google.visualization.LineChart(document.getElementById('curve_chart_rating'));
+        chart2.draw(googleRatingData, options2);
+
+      }
+	  
+
+	  
+    </script>
+  </head>
+
+  <body>
+    <!--Div that will hold the pie chart-->
+	<div id="title_div"></div>
+    <div id="url_div"></div>
+	<div id="curve_chart_rating" style="width: 900px; height: 500px"></div>
+	<div id="curve_chart_ratingcnt" style="width: 900px; height: 500px"></div>
+
+  </body>
+</html>

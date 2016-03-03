@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+  version="2.5">
+  <servlet>
+    <servlet-name>main</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.MainPageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>observed</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.ObserverdMoviesServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>collectFilmData</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.CollectFilmDataServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>showFilmData</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.AllFilmDataServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>clearDb</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.ClearDbServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>parse</servlet-name>
+    <servlet-class>de.projectimdbdeadpool.servlet.ParseServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>main</servlet-name>
+    <url-pattern>/rest/</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>observed</servlet-name>
+    <url-pattern>/rest/observed/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>collectFilmData</servlet-name>
+    <url-pattern>/rest/collect/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>showFilmData</servlet-name>
+    <url-pattern>/rest/show/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>clearDb</servlet-name>
+    <url-pattern>/rest/clear/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>parse</servlet-name>
+    <url-pattern>/rest/parse/*</url-pattern>
+  </servlet-mapping>
+</web-app>

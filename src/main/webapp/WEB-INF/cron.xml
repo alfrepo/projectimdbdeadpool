@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/collect</url>
+    <description>Collect the data every day</description>
+    <schedule>every day 18:10</schedule>
+  </cron>
+</cronentries>
