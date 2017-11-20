@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmData;
-
 // [START example]
 @SuppressWarnings("serial")
 public class ClearDbServlet extends HttpServlet {
@@ -43,7 +41,7 @@ public class ClearDbServlet extends HttpServlet {
 		out.println(
 				"<form action='#' method='post'>"
 				+"<input type='hidden' name='clearDb' value='true'>"
-				+"<input type='submit' value='Clear DB'>"
+				+"<input type='submit' value='Clear all collected data from DB'>"
 				+"</form>"
 				);
 		out.println("</html>");
@@ -62,8 +60,8 @@ public class ClearDbServlet extends HttpServlet {
 		log.warning(MESSAGE_CLEARING_ALL_FILM_DATA);
 		out.println(MESSAGE_CLEARING_ALL_FILM_DATA);
 
-		new UtilStoreGcloudFilmData(this).clearAllFilmDataFromDatastore();
-//		new UtilStoreFilmUrl(this).clearAllFilmUrlFromDatastore();
+		// TODO reactivate clearing db
+//		new UtilStoreGcloudFilmData(this).clearAllFilmDataFromDatastore();
 		
 		log.warning(MESSAGE_CLEARING_DONE);
 		out.println(MESSAGE_CLEARING_DONE);

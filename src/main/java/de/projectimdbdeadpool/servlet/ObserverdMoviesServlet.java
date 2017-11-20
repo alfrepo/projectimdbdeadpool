@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gcloud.datastore.Key;
+import com.google.cloud.datastore.Key;
 
 import de.projectimdbdeadpool.model.FilmData;
 import de.projectimdbdeadpool.model.FilmUrl;
@@ -65,7 +65,7 @@ public class ObserverdMoviesServlet extends HttpServlet {
 		
 		// load from FilmUrl form DB
 		List<FilmUrl> films = utilStore.loadFilmUrl();
-		out.println("Observed FIlm URLs:");
+		out.println("Observed Film URLs:");
 		out.println("<table>");
 		for(FilmUrl url : films){
 			out.println("<tr>");
@@ -73,7 +73,7 @@ public class ObserverdMoviesServlet extends HttpServlet {
 			out.println(
 					"<td>"
 					+"<form action='#' method='post'>"
-					+"<input type='hidden' name='imdburlkeyForDeletion' value='"+url.entityKey.nameOrId()+"'>"
+					+"<input type='hidden' name='imdburlkeyForDeletion' value='"+url.entityKey.getNameOrId()+"'>"
 					+"<input type='submit' value='Delete'>"
 					+"</form>"
 					+"</td>"

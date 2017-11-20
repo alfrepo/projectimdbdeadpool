@@ -39,12 +39,12 @@ public class MainPageServlet extends HttpServlet {
 
 		out.println("<head></head><body>");
 		out.println("<ul>");
-		out.println("<li><a href='/rest/collect'>Collect</a></li>");
-		out.println("<li><a href='/rest/show'>Show</a></li>");
+		out.println("<li><a href='/rest/collect'>Collect current data from IMDB</a></li>");
+		out.println("<li><a href='/rest/show'>Show all collected data</a></li>");
 		out.println("<li><a href='/rest/show?imdbId=tt2488496'>Show IMDB Id tt2488496</a></li>");
-		out.println("<li><a href='/rest/clear'>Clear</a></li>");
-		out.println("<li><a href='/rest/observed'>Observed</a></li>");
-		out.println("<li><a href='/rest/parse'>Parse</a></li>");
+		out.println("<li><a href='/rest/clear'>Clear DB data</a></li>");
+		out.println("<li><a href='/rest/observed'>Edit Observed URLs</a></li>");
+		out.println("<li><a href='/rest/parse'>Test Parse IMDB URL</a></li>");
 		out.println("</ul>");
 
 		

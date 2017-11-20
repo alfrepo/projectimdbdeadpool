@@ -30,8 +30,22 @@
 		  var imdbid = getImdbid();
 		  console.log(imdbid);
 		  
-		  var flickerAPI = "http://projectimdbdeadpool.appspot.com/rest/show?imdbId="+imdbid;
+		  var flickerAPI = "http://localhost:8080/rest/show?imdbId="+imdbid;
 		  console.log(flickerAPI);
+		  
+		  var currentLocation = window.location;
+		  var portpart=""
+		  if(window.location.port) {
+			  portpart=":"+window.location.port
+		  }
+		  console.log(window.location.protocol);
+		  console.log(window.location.hostname);
+		  console.log(window.location.port);
+		  console.log(portpart);
+		  
+		  
+		  // here we call the current server for the table data: http://localhost:8080/rest/show?imdbId=tt2488496
+		  var flickerAPI = window.location.protocol+"//"+window.location.hostname+portpart+"/rest/show?imdbId="+imdbid;
 		  
 		  $.getJSON( flickerAPI, {
 			tags: "mount rainier",
@@ -56,7 +70,7 @@
 				console.log(ratingCntData);
 				var googleRatingCntData = google.visualization.arrayToDataTable(ratingCntData);
 				
-				$("#url_div").text(jsondata.imdburl);
+				$("#url_div").html("<a href=\""+jsondata.imdburl+"\">"+jsondata.imdburl+"</a>");
 				$("#title_div").text(jsondata.filmdata[0].name);				
 				
 				drawChart(googleRatingData, googleRatingCntData);

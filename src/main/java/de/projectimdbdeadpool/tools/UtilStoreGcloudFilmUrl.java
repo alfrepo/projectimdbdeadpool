@@ -8,13 +8,13 @@ import java.util.logging.Logger;
 
 import javax.servlet.GenericServlet;
 
-import com.google.gcloud.datastore.Datastore;
-import com.google.gcloud.datastore.Entity;
-import com.google.gcloud.datastore.Key;
-import com.google.gcloud.datastore.KeyFactory;
-import com.google.gcloud.datastore.Query;
-import com.google.gcloud.datastore.StringValue;
-import com.google.gcloud.datastore.StructuredQuery.OrderBy;
+import com.google.cloud.datastore.Datastore;
+import com.google.cloud.datastore.Entity;
+import com.google.cloud.datastore.Key;
+import com.google.cloud.datastore.KeyFactory;
+import com.google.cloud.datastore.Query;
+import com.google.cloud.datastore.StringValue;
+import com.google.cloud.datastore.StructuredQuery.OrderBy;
 
 import de.projectimdbdeadpool.model.FilmUrl;
 
@@ -29,6 +29,7 @@ public class UtilStoreGcloudFilmUrl extends UtilStoreGcloud {
 	}
 
 	public Key storeFilmUrl(FilmUrl filmUrl) throws IOException {
+		
 		if (filmUrl == null || !filmUrl.isValid()) {
 			return null;
 		}
@@ -36,14 +37,14 @@ public class UtilStoreGcloudFilmUrl extends UtilStoreGcloud {
 		Datastore datastore = initDataStore(servlet);
 		
 		// Create a Key factory to construct keys associated with this project.
-		KeyFactory keyFactory = datastore.newKeyFactory().kind(FILM_URL_KEY);
+		KeyFactory keyFactory = datastore.newKeyFactory().setKind(FILM_URL_KEY);
 		
 	
 		Key key = datastore.allocateId(keyFactory.newKey());
-		Entity dataEntity = Entity.builder(key)
-				.set("created", filmUrl.created)
-				.set("name", StringValue.builder(filmUrl.name).indexed(true).build())
-				.set("imdbUrl", StringValue.builder(filmUrl.imdbUrl).indexed(true).build())
+		Entity dataEntity = Entity.newBuilder(key)
+				.set("created", UtilsConvert.toTimeStamp(filmUrl.created))
+				.set("name", StringValue.newBuilder(filmUrl.name).build())
+				.set("imdbUrl", StringValue.newBuilder(filmUrl.imdbUrl).build())
 				.build();
 	
 		datastore.put(dataEntity);
@@ -52,11 +53,12 @@ public class UtilStoreGcloudFilmUrl extends UtilStoreGcloud {
 	}
 
 	public List<FilmUrl> loadFilmUrl() {
+
 			Datastore datastore = initDataStore(servlet);
 			
-			Query<Entity> query = Query.entityQueryBuilder()
-					.kind(FILM_URL_KEY)
-					.orderBy(OrderBy.asc("created"))
+			Query<Entity> query = Query.newEntityQueryBuilder()
+					.setKind(FILM_URL_KEY)
+					.addOrderBy(OrderBy.asc("created"))
 					.build();
 			Iterator<Entity> iterator = datastore.run(query);
 	
@@ -65,10 +67,10 @@ public class UtilStoreGcloudFilmUrl extends UtilStoreGcloud {
 				Entity entity = iterator.next();
 				
 				FilmUrl data = new FilmUrl();
-				data.created = entity.getDateTime("created");
+				data.created = UtilsConvert.toDateTime(entity.getTimestamp("created"));
 				data.name = entity.getString("name");
 				data.imdbUrl = entity.getString("imdbUrl");
-				data.entityKey = entity.key();
+				data.entityKey = entity.getKey();
 				
 				list.add(data);
 			}
@@ -76,8 +78,9 @@ public class UtilStoreGcloudFilmUrl extends UtilStoreGcloud {
 	}
 	
 	public void deleteFilmUrl(String nameOrId) {
+
 		Datastore datastore = initDataStore(servlet);
-		Query<Entity> query = Query.entityQueryBuilder().kind(FILM_URL_KEY).build();
+		Query<Entity> query = Query.newEntityQueryBuilder().setKind(FILM_URL_KEY).build();
 		Iterator<Entity> iterator = datastore.run(query);
 		
 		log.info("Search nameOrId "+nameOrId);
@@ -85,14 +88,14 @@ public class UtilStoreGcloudFilmUrl extends UtilStoreGcloud {
 		// iterate keys
 		while (iterator.hasNext()) {
 			Entity e = iterator.next();
-			log.info("Url nameOrId "+e.key().nameOrId());
+			log.info("Url nameOrId "+e.getKey().getNameOrId());
 			
-			if(e.key().nameOrId().toString().equals(nameOrId)){
+			if(e.getKey().getNameOrId().toString().equals(nameOrId)){
 				
 				log.info("Found nameOrId "+nameOrId+". Will delete now.");
 				
 				// delete
-				datastore.delete(e.key());
+				datastore.delete(e.getKey());
 				return;
 			}
 		}

@@ -1,7 +1,8 @@
 package de.projectimdbdeadpool.model;
 
-import com.google.gcloud.datastore.DateTime;
-import com.google.gcloud.datastore.Key;
+import org.joda.time.DateTime;
+
+import com.google.cloud.datastore.Key;
 
 public class FilmUrl {
 	public Key entityKey = null;

@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gcloud.datastore.Datastore;
-import com.google.gcloud.datastore.Entity;
-import com.google.gcloud.datastore.Query;
-import com.google.gcloud.datastore.StructuredQuery.Filter;
-import com.google.gcloud.datastore.StructuredQuery.OrderBy;
-import com.google.gcloud.datastore.StructuredQuery.PropertyFilter;
+import com.google.cloud.datastore.Datastore;
+import com.google.cloud.datastore.Entity;
+import com.google.cloud.datastore.Query;
+import com.google.cloud.datastore.StructuredQuery.Filter;
+import com.google.cloud.datastore.StructuredQuery.OrderBy;
+import com.google.cloud.datastore.StructuredQuery.PropertyFilter;
 
 import de.projectimdbdeadpool.tools.UtilStoreGcloud;
 
@@ -30,11 +30,13 @@ public class QueryDbExamplesServlet extends HttpServlet {
 		Filter ratingCntFilter = PropertyFilter.ge("ratingCnt", 100);
 		Filter imdbUrlFilter =	PropertyFilter.eq("imdbUrl", "http://www.imdb.com/title/tt1431045/");
 		
-		Query<Entity> query = Query.entityQueryBuilder()
-				.kind("FilmData")
-				.filter(imdbUrlFilter)
-				.orderBy(OrderBy.desc("created"))
-				.build();
+		Query<Entity> query = null;
+		// TODO rewrite
+//		Query<Entity> query = Query.entityQueryBuilder()
+//				.kind("FilmData")
+//				.filter(imdbUrlFilter)
+//				.orderBy(OrderBy.desc("created"))
+//				.build();
 		
 		Iterator<Entity> iterator = datastore.run(query);
 		

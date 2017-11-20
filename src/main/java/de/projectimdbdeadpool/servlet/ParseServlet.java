@@ -2,7 +2,6 @@ package de.projectimdbdeadpool.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,12 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gcloud.datastore.Key;
+import com.google.cloud.datastore.Key;
 
 import de.projectimdbdeadpool.model.FilmData;
 import de.projectimdbdeadpool.model.FilmUrl;
 import de.projectimdbdeadpool.tools.UtilParse;
-import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmData;
 import de.projectimdbdeadpool.tools.UtilStoreGcloudFilmUrl;
 
 /**
